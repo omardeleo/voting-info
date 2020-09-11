@@ -1,12 +1,29 @@
 name: Gatsby Publish
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      id: cache
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Install Dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm ci
+    - run: npm run lint
+#     - run: npm test # Uncomment if/when we actually add tests
+
   build:
+    needs: [lint]
+    if: github.ref == "master"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
