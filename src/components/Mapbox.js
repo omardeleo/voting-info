@@ -27,11 +27,15 @@ const Mapbox = ()=>{
             center: [-74, 40.72],
             zoom: 10.3
         })
-        locations.forEach(loc=>
+        locations.forEach(loc=>{
+            const popup = new mapboxgl.Popup({ offset: 25 }).setText(
+                'This is a test location'
+                );
             new mapboxgl.Marker()
                 .setLngLat([loc.lng,loc.lat])
+                .setPopup(popup)
                 .addTo(map)
-        )
+    })
     },[])
 
 
