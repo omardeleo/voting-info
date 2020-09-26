@@ -2,11 +2,7 @@ import React, { useEffect, useRef } from "react"
 import mapboxgl from "mapbox-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 
-const styles = {
-  width: "50vw",
-  height: "calc(100vh - 80px)",
-  position: "absolute",
-}
+import "./mapbox.css"
 
 const Mapbox = () => {
   const mapContainer = useRef(null)
@@ -37,9 +33,7 @@ const Mapbox = () => {
     })
   }, [])
 
-  return (
-    <div ref={el => (mapContainer.current = el)} id="mapbox" style={styles} />
-  )
+  return <div ref={el => (mapContainer.current = el)} id="mapbox" />
 }
 
 export default Mapbox
